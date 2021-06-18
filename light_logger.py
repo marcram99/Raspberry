@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from pathlib import Path    
 
 date_stamp = f'{datetime.now():%Y-%m}'
-logfiles_path = Path.home().joinpath('Marc-perso/Code/logfiles')
+logfiles_path = Path.home().joinpath('Documents/Python/logfiles')
 logfile = logfiles_path.joinpath(f'{date_stamp}_capt02.log')
 if not logfiles_path.exists():
     Path.mkdir(logfiles_path)
