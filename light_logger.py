@@ -2,13 +2,9 @@ import json
 from datetime import datetime, timedelta
 from pathlib import Path    
 from config import Config
+import capteurs
 
-#date_stamp = f'{datetime.now():%Y-%m}'
-#logfiles_path = Path.home().joinpath('Documents/Python/logfiles')
-logfile = Config.light_logfile#logfiles_path.joinpath(f'{date_stamp}_capt02.log')
-
-#if not logfiles_path.exists():
-#    Path.mkdir(logfiles_path)
+logfile = Config.light_logfile
 if not logfile.exists():
     logfile.touch()
 datafile = Path.cwd().joinpath('data.json')
@@ -25,7 +21,8 @@ with open(datafile) as json_file:
     mail_time = data['mail_time']
 print(25*'-')
 print(f"dernière valeur lue: {stored_lux} @ {stored_time}")
-capt_value = input('valeur du capeur de lum:')
+capt_value = input('valeur du capeur de lum:')#remplace lecture capt pour test
+#capt_value = capteurs.read_lum() 
 
 if stored_lux == 'dark':
     if capt_value == 'dark':
