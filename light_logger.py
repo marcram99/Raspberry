@@ -1,19 +1,21 @@
 import json
 from datetime import datetime, timedelta
 from pathlib import Path    
+from config import Config
 
-date_stamp = f'{datetime.now():%Y-%m}'
-logfiles_path = Path.home().joinpath('Documents/Python/logfiles')
-logfile = logfiles_path.joinpath(f'{date_stamp}_capt02.log')
-if not logfiles_path.exists():
-    Path.mkdir(logfiles_path)
+#date_stamp = f'{datetime.now():%Y-%m}'
+#logfiles_path = Path.home().joinpath('Documents/Python/logfiles')
+logfile = Config.light_logfile#logfiles_path.joinpath(f'{date_stamp}_capt02.log')
+
+#if not logfiles_path.exists():
+#    Path.mkdir(logfiles_path)
 if not logfile.exists():
     logfile.touch()
 datafile = Path.cwd().joinpath('data.json')
 if not datafile.exists():
     with open(datafile,'w')as new_file:
         json.dump({'light_mode':'dark','change_time':'','mail_time': '', 'mail_alert':0},new_file)
-time_mailwarning = timedelta(hours=1)
+mailwarning_time = timedelta(hours=1)
 
 with open(datafile) as json_file:
     data = json.load(json_file)
@@ -52,7 +54,7 @@ if stored_lux == 'light':
             json.dump(data,json_file)
         print(f'la lumière a été allumée pendant: {time_diff}')
     if capt_value == 'light':
-        if (time_diff > time_mailwarning) :
+        if (time_diff > mailwarning_time) :
             if not mail_alert:
                 with open(logfile, 'a') as f:
                     f.write(f"{time_stamp:%Y-%m-%d %H:%M:%S}_mail envoyé pour alarme +1h.\n")
@@ -66,7 +68,7 @@ if stored_lux == 'light':
             if mail_alert:
                 last_mail = datetime.strptime(mail_time, '%Y-%m-%d %H:%M:%S')
                 time_diff = time_stamp - last_mail
-                if time_diff > time_mailwarning:
+                if time_diff > mailwarning_time:
                     with open(logfile, 'a') as f:
                         f.write(f"{time_stamp:%Y-%m-%d %H:%M:%S}_ nouveau mail envoyé pour alarme +1h.\n")
                     data = {'light_mode':'light',

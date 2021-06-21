@@ -5,15 +5,11 @@ import busio
 import adafruit_si7021
 from pathlib import Path
 from datetime import datetime
+from config import Config
 
 time_stamp = f'{datetime.now():%Y-%m-%d %H:%M:%S}'
-date_stamp = f'{datetime.now():%Y-%m-%d}'
 
-logfiles_path = Path.home().joinpath('Marc-perso/Code/logfiles')
-if not logfiles_path.exists():
-    Path.mkdir(logfiles_path)
-logfile_name = f'{date_stamp}_capt01.log'    
-logfile = logfiles_path.joinpath(logfile_name)
+logfile = Config.temp_logfile 
 
 i2c = busio.I2C(board.SCL, board.SDA)
 sensor = adafruit_si7021.SI7021(i2c)
