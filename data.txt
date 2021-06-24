@@ -1,1 +1,0 @@
-{"light_mode": "light", "time_stamp": "2021-06-16 16:55:54"}
