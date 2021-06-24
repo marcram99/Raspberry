@@ -41,5 +41,6 @@ ENV/
 env.bak/
 venv.bak/
 
-#local config file 
+#local config file
+data.json
 #config.py
