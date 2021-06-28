@@ -7,10 +7,14 @@ import capteurs
 logfile = Config.light_logfile
 if not logfile.exists():
     logfile.touch()
+debug_logfile = Config.debug_logfile
+if not debug_logfile.exists():
+    logfile.touch()
 datafile = Path.cwd().joinpath('data.json')
 if not datafile.exists():
     with open(datafile,'w')as new_file:
         json.dump({'light_mode':'dark','change_time':'','mail_time': '', 'mail_alert':0},new_file)
+
 mailwarning_time = timedelta(hours=1)
 
 with open(datafile) as json_file:
@@ -22,7 +26,7 @@ with open(datafile) as json_file:
 print(25*'-')
 print(f"dernière valeur lue: {stored_lux} @ {stored_time}")
 capt_value = input('valeur du capeur de lum:')#remplace lecture capt pour test
-#capt_value = capteurs.read_lum() 
+#capt_value = capteurs.read_lum(seuil_nuit) 
 
 if stored_lux == 'dark':
     if capt_value == 'dark':
@@ -33,6 +37,7 @@ if stored_lux == 'dark':
            f.write(f"{time_stamp:%Y-%m-%d %H:%M:%S}_room passed to light\n")
         data = {'light_mode':'light',
                 'change_time': f'{time_stamp:%Y-%m-%d %H:%M:%S}',
+                'mail_time': '', 
                 'mail_alert': 0}
         with open (datafile, 'w') as json_file:
             json.dump(data, json_file)
@@ -46,6 +51,7 @@ if stored_lux == 'light':
            f.write(f"{time_stamp:%Y-%m-%d %H:%M:%S}_room passed to dark\n")
         data = {'light_mode':'dark',
                 'change_time': f'{time_stamp:%Y-%m-%d %H:%M:%S}',
+                'mail_time': '', 
                 'mail_alert': 0}
         with open (datafile, 'w') as json_file:
             json.dump(data,json_file)
