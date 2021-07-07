@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from pathlib import Path    
 
 class Config():
-    logfiles_path = Path.home().joinpath('Marc-perso/Code/Python/logfiles')
+    logfiles_path = Path.home().joinpath('Documents/Python/logfiles')
     if not logfiles_path.exists():
         Path.mkdir(logfiles_path)
 

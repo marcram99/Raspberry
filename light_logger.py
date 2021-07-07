@@ -1,21 +1,21 @@
 import json
 from datetime import datetime, timedelta
-from pathlib import Path    
+from pathlib import Path
 from config import Config
 import capteurs
 
+seuil_nuit = 20
+mailwarning_time = timedelta(hours=1)
 logfile = Config.light_logfile
 if not logfile.exists():
     logfile.touch()
 debug_logfile = Config.debug_logfile
 if not debug_logfile.exists():
     logfile.touch()
-datafile = Path.cwd().joinpath('data.json')
+datafile = Path.home().joinpath('Documents/Python/Raspberry/data.json')
 if not datafile.exists():
     with open(datafile,'w')as new_file:
         json.dump({'light_mode':'dark','change_time':'','mail_time': '', 'mail_alert':0},new_file)
-
-mailwarning_time = timedelta(hours=1)
 
 with open(datafile) as json_file:
     data = json.load(json_file)
@@ -23,11 +23,15 @@ with open(datafile) as json_file:
     stored_time = data['change_time']
     mail_alert = data['mail_alert']
     mail_time = data['mail_time']
+
 print(25*'-')
 print(f"dernière valeur lue: {stored_lux} @ {stored_time}")
-capt_value = input('valeur du capeur de lum:')#remplace lecture capt pour test
-#capt_value = capteurs.read_lum(seuil_nuit) 
-
+with open(debug_logfile, 'a') as f:
+    f.write(f'{datetime.now()} DEBUG: stored value = {stored_lux}\n')
+#capt_value = input('valeur du capeur de lum:')#remplace lecture capt pour test
+capt_value = capteurs.read_lum(seuil_nuit) 
+with open(debug_logfile, 'a') as f:
+    f.write(f'{datetime.now()} DEBUG: readed value = {capt_value}\n')
 if stored_lux == 'dark':
     if capt_value == 'dark':
         pass
