@@ -33,6 +33,7 @@ def read_capt02():
     return {'lux': lux, 'ir':ir}
 
 def read_lum(seuil_nuit):
+    """Renvoi la valeur 'light' ou 'dark' en fonction du param:'seuil nuit'""" 
     if sensor02.lux > seuil_nuit:
         return "light"
     else:
