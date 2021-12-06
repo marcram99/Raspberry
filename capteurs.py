@@ -4,7 +4,6 @@ import busio
 import adafruit_si7021
 import adafruit_tsl2591
 from datetime import datetime
-from config import Config
 
 i2c = busio.I2C(board.SCL, board.SDA)
 sensor01 = adafruit_si7021.SI7021(i2c)

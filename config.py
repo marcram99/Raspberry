@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from pathlib import Path    
+from pathlib import Path
 
 class Config():
     logfiles_path = Path.home().joinpath('Documents/Python/logfiles')
