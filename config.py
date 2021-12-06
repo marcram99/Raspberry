@@ -11,3 +11,8 @@ class Config():
     debug_logfile = logfiles_path.joinpath(f'00_DEBUG_logfile.log')
 
     seuil_nuit = 40
+
+class Raspi():
+    name = "raspi cave"
+    capteur = ["temp", "hum", "lux", "light" ] 
+    switch = ["garage", "voiture"]

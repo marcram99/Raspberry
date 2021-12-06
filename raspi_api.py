@@ -2,6 +2,7 @@ import capteurs
 from fastapi import FastAPI
 from pathlib import Path
 from datetime import datetime
+from config import Raspi
 
 app = FastAPI()
 
@@ -11,9 +12,10 @@ def api_root():
 
 @app.get("/api/info")
 async def get_info():
-        return {"name": "raspi cave",
-                "capteur": ["temp", "hum", "light", "mov"],
-                "switch": ["garage", "voiture", "pompe", "vanne1", "vanne2"]}
+        return {"name": Raspi.name,
+                "capteur": Raspi.capteur,
+                "switch": Raspi.switch,
+                }
 
 
 @app.get("/api/capteurs")
