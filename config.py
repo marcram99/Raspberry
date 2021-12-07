@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from pathlib import Path
 
+#configuration des différents chemins d'accès des logfiles
 class Config():
     logfiles_path = Path.home().joinpath('Documents/Python/logfiles')
     if not logfiles_path.exists():
@@ -12,6 +13,7 @@ class Config():
 
     seuil_nuit = 40
 
+# configuration des paramètres du rapsberry et de ces capteurs, switchs etc...
 class Raspi():
     name = "raspi cave"
     capteur = ["temp", "hum", "lux", "light" ] 
