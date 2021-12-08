@@ -27,11 +27,11 @@ async def get_capteurs():
     lum = capteurs.read_lum(20)
 
     donnees = {
-        'temp': temp,
-        'hum': hum,
-        'lux':lux,
+        'temp': f'{temp:.2f}',
+        'hum':f'{hum:.2f}',
+        'lux':f'{lux:.2f}',
+        'ir':f'{ir:.2f}',
         'lum':lum,
-        'ir':ir,
     }
     return donnees
 
