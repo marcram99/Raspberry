@@ -1,4 +1,5 @@
 import capteurs
+import json
 from fastapi import FastAPI
 from pathlib import Path
 from datetime import datetime
@@ -27,11 +28,11 @@ async def get_capteurs():
     lum = capteurs.read_lum(20)
 
     donnees = {
-        'temp': f'{temp:.2f}',
-        'hum':f'{hum:.2f}',
-        'lux':f'{lux:.2f}',
-        'ir':f'{ir:.2f}',
-        'lum':lum,
+        "temp": f"{temp:.2f}",
+        "hum":f"{hum:.2f}",
+        "lux":f"{lux:.2f}",
+        "ir":f"{ir:.2f}",
+        "lum":lum,
     }
     return donnees
 

@@ -3,7 +3,7 @@ from pathlib import Path
 
 #configuration des différents chemins d'accès des logfiles
 class Config():
-    logfiles_path = Path.home().joinpath('Documents/Python/logfiles')
+    logfiles_path = Path.home().joinpath('Raspberry/logfiles')
     if not logfiles_path.exists():
         Path.mkdir(logfiles_path)
 
@@ -15,6 +15,6 @@ class Config():
 
 # configuration des paramètres du rapsberry et de ces capteurs, switchs etc...
 class Raspi():
-    name = "raspi cave"
+    name = "cave"
     capteur = ["temp", "hum", "lux", "light" ] 
     switch = ["garage", "voiture"]
