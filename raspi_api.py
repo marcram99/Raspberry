@@ -1,9 +1,9 @@
-import capteurs
+from . import capteurs2 as capteurs
 import json
 from fastapi import FastAPI
 from pathlib import Path
 from datetime import datetime
-from config import Raspi
+from .config import Raspi
 
 app = FastAPI()
 
@@ -35,8 +35,3 @@ async def get_capteurs():
         "lum":lum,
     }
     return donnees
-
-if __name__ == '__main__':
-    import uvicorn
-    uvicorn.run("raspi_api:app", host="0.0.0.0", port=8000, log_level="debug")
-    

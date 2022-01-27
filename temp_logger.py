@@ -1,6 +1,6 @@
 #! /usr/bin/python3.5
 # encoding:utf-8
-import capteurs
+import capteurs2 as capteurs
 from pathlib import Path
 from datetime import datetime
 from config import Config
