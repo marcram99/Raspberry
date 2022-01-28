@@ -26,12 +26,12 @@ with open(datafile) as json_file:
 
 print(25*'-')
 print(f"dernière valeur lue: {stored_lux} @ {stored_time}")
-with open(debug_logfile, 'a') as f:
-    f.write(f'{datetime.now()} DEBUG: stored value = {stored_lux}\n')
+#with open(debug_logfile, 'a') as f:
+#    f.write(f'{datetime.now()} DEBUG: stored value = {stored_lux}\n')
 #capt_value = input('valeur du capeur de lum:')#remplace lecture capt pour test
 capt_value = capteurs.read_lum(seuil_nuit) 
-with open(debug_logfile, 'a') as f:
-    f.write(f'{datetime.now()} DEBUG: readed value = {capt_value}\n')
+#with open(debug_logfile, 'a') as f:
+#    f.write(f'{datetime.now()} DEBUG: readed value = {capt_value}\n')
 if stored_lux == 'dark':
     if capt_value == 'dark':
         pass

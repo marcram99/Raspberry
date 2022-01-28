@@ -56818,3 +56818,9 @@
 2022-01-27 21:30:01.928330 DEBUG: readed value = dark
 2022-01-27 21:31:01.296876 DEBUG: stored value = dark
 2022-01-27 21:31:01.298189 DEBUG: readed value = dark
+2022-01-28 22:19:53.056234 DEBUG: Capteur init aprés 0 essais
+2022-01-28 22:19:58.966510 DEBUG: Capteur init aprés 1 essais
+2022-01-28 22:21:19.386688 DEBUG: Capteur init aprés 0 essais
+2022-01-28 22:21:22.431798 DEBUG: Capteur init aprés 1 essais
+2022-01-28 22:23:01.583735 DEBUG: stored value = dark
+2022-01-28 22:23:01.585032 DEBUG: readed value = dark

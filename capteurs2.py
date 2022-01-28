@@ -12,7 +12,7 @@ if not debug_logfile.exists():
 
 i2c = busio.I2C(board.SCL, board.SDA)
 badcaptor = 1
-connter = 0
+counter = 0
 while badcaptor:
     try:
         sensor01 = adafruit_si7021.SI7021(i2c)
