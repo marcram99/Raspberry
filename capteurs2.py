@@ -15,6 +15,10 @@ while badcaptor:
     except RuntimeError:
         badcaptor = 1
         counter += 1
+    else:
+        with open(debug_logfile, 'a') as f:
+            f.write(f'{datetime.now()} DEBUG: Capteur init aprés {counter} essais\n')
+#
 
 sensor02 = adafruit_tsl2591.TSL2591(i2c)
 
