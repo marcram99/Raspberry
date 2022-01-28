@@ -3,7 +3,12 @@ import digitalio
 import busio
 import adafruit_si7021
 import adafruit_tsl2591
+from config import Config
 from datetime import datetime
+
+debug_logfile = Config.debug_logfile
+if not debug_logfile.exists():
+    debug_logfile.touch()
 
 i2c = busio.I2C(board.SCL, board.SDA)
 badcaptor = 1

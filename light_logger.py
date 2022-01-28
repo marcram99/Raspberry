@@ -11,7 +11,7 @@ if not logfile.exists():
     logfile.touch()
 debug_logfile = Config.debug_logfile
 if not debug_logfile.exists():
-    logfile.touch()
+    debug_logfile.touch()
 datafile = Path.home().joinpath('Documents/Python/Raspberry/data.json')
 if not datafile.exists():
     with open(datafile,'w')as new_file:
