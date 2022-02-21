@@ -1,7 +1,7 @@
 #! /usr/bin/python3.5
 # encoding:utf-8
-import capteurs2 as capteurs
 import digitalio
+import board
 import busio
 import adafruit_si7021
 import adafruit_tsl2591
@@ -33,10 +33,12 @@ while badcaptor:
     else:
         with open(debug_logfile, 'a') as f:
             f.write(f'{time_stamp} DEBUG: Capteur init aprés {counter} essais\n')
-
-temp = sensor01.temperature
-hum = sensor01.relative_humidity 
-data = f'{time_stamp}_T:{temp:.2f}_H:{hum:.1f}\n'
+try:
+    temp = sensor01.temperature
+    hum = sensor01.relative_humidity 
+    data = f'{time_stamp}_T:{temp:.2f}_H:{hum:.1f}\n'
+except Exception as read_error:
+    data = f'{time_stamp}_No value cause of: {read_error}'
 with open(logfile,'a') as f:
     f.write(data)
 
