@@ -1,9 +1,9 @@
-from . import capteurs2 as capteurs
+#import capteurs2 as capteurs
 import json
 from fastapi import FastAPI
 from pathlib import Path
 from datetime import datetime
-from .config import Raspi
+from config import Raspi
 
 app = FastAPI()
 
