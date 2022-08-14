@@ -14,3 +14,4 @@ venv.bak/
 #local config file
 data.json
 #config.py
+/logfiles/
