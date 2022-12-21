@@ -1,13 +1,21 @@
 import json
 import uvicorn
 from pathlib import Path
+from datetime import datetime
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 
-files_path = Path.home().joinpath('Marc-perso/code/python/Raspi/files')
+now = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
+files_path = Path.home().joinpath('Marc-perso/code/python/Raspberry/files')
 data_file = files_path.joinpath('data.json')
+if not data_file.exists():
+    with open(data_file, 'w') as new_file:
+        json.dump({'light_mode': 'dark',
+                   'last_change': now,
+                   'warning_level': 0
+                   }, new_file)
 
 test_lightcaptor = files_path.joinpath('light.json')
 if not test_lightcaptor.exists():
@@ -90,4 +98,4 @@ async def read_json():
 
 
 if __name__ == '__main__':
-    uvicorn.run("light_simul:app")
+    uvicorn.run("light_simul:app", port=7000)

@@ -1,86 +1,73 @@
 import json
 from datetime import datetime, timedelta
-from pathlib import Path
 from config import Config
-import capteurs
+from capteurs import Light_captor as capt
 
-seuil_nuit = 20
-mailwarning_time = timedelta(hours=1)
-logfile = Config.light_logfile
-if not logfile.exists():
-    logfile.touch()
-debug_logfile = Config.debug_logfile
-if not debug_logfile.exists():
-    debug_logfile.touch()
-datafile = Path.home().joinpath('Documents/Python/Raspberry/data.json')
-if not datafile.exists():
-    with open(datafile,'w')as new_file:
-        json.dump({'light_mode':'dark','change_time':'','mail_time': '', 'mail_alert':0},new_file)
-
-with open(datafile) as json_file:
+now = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
+log_file = Config.light_logfile
+data_file = Config.data_file
+if not data_file.exists():
+    with open(data_file, 'w') as new_file:
+        json.dump({'light_mode': 'dark',
+                   'last_change': now,
+                   'warning_level': 0
+                   }, new_file)
+#test_lightcaptor = Config.files_path.joinpath("light.json")
+light_capt = capt()
+light_readed = light_capt.read_state(5)
+""" if not test_lightcaptor.exists():
+    with open(test_lightcaptor, 'w') as json_file:
+        json.dump({'light_mode': 'dark'}, json_file)
+"""
+with open(data_file) as json_file:
     data = json.load(json_file)
-    stored_lux = data['light_mode']
-    stored_time = data['change_time']
-    mail_alert = data['mail_alert']
-    mail_time = data['mail_time']
+    light_mode = data["light_mode"]
+    last_change = data["last_change"]
+    warning_level = data["warning_level"]
+"""with open(test_lightcaptor) as json_file:
+    light_readed = json.load(json_file)['light_mode']
+"""
+print(f'DEBUG: Data.json = {light_mode} @ {last_change} / {warning_level}')
+print(f'DEBUG: new light value readed: {light_readed}')
 
-print(25*'-')
-print(f"dernière valeur lue: {stored_lux} @ {stored_time}")
-#with open(debug_logfile, 'a') as f:
-#    f.write(f'{datetime.now()} DEBUG: stored value = {stored_lux}\n')
-#capt_value = input('valeur du capeur de lum:')#remplace lecture capt pour test
-capt_value = capteurs.read_lum(seuil_nuit) 
-#with open(debug_logfile, 'a') as f:
-#    f.write(f'{datetime.now()} DEBUG: readed value = {capt_value}\n')
-if stored_lux == 'dark':
-    if capt_value == 'dark':
-        pass
-    if capt_value == 'light':
-        time_stamp = datetime.now()
-        with open(logfile,'a') as f:
-           f.write(f"{time_stamp:%Y-%m-%d %H:%M:%S}_room passed to light\n")
-        data = {'light_mode':'light',
-                'change_time': f'{time_stamp:%Y-%m-%d %H:%M:%S}',
-                'mail_time': '', 
-                'mail_alert': 0}
-        with open (datafile, 'w') as json_file:
-            json.dump(data, json_file)
 
-if stored_lux == 'light':
-    time_stamp = datetime.now()
-    first_light = datetime.strptime(stored_time, '%Y-%m-%d %H:%M:%S')
-    time_diff = time_stamp - first_light
-    if capt_value == 'dark':
-        with open(logfile,'a') as f:
-           f.write(f"{time_stamp:%Y-%m-%d %H:%M:%S}_room passed to dark\n")
-        data = {'light_mode':'dark',
-                'change_time': f'{time_stamp:%Y-%m-%d %H:%M:%S}',
-                'mail_time': '', 
-                'mail_alert': 0}
-        with open (datafile, 'w') as json_file:
-            json.dump(data,json_file)
-        print(f'la lumière a été allumée pendant: {time_diff}')
-    if capt_value == 'light':
-        if (time_diff > mailwarning_time) :
-            if not mail_alert:
-                with open(logfile, 'a') as f:
-                    f.write(f"{time_stamp:%Y-%m-%d %H:%M:%S}_mail envoyé pour alarme +1h.\n")
-                data = {'light_mode':'light',
-                        'change_time': stored_time, 
-                        'mail_time':f'{time_stamp:%Y-%m-%d %H:%M:%S}',
-                        'mail_alert': 1}
-                with open (datafile, 'w') as json_file:
-                    json.dump(data, json_file)
-                print("lumière allumée depuis plus d'une heure: un mail à été envoyé!")
-            if mail_alert:
-                last_mail = datetime.strptime(mail_time, '%Y-%m-%d %H:%M:%S')
-                time_diff = time_stamp - last_mail
-                if time_diff > mailwarning_time:
-                    with open(logfile, 'a') as f:
-                        f.write(f"{time_stamp:%Y-%m-%d %H:%M:%S}_ nouveau mail envoyé pour alarme +1h.\n")
-                    data = {'light_mode':'light',
-                            'change_time': stored_time, 
-                            'mail_time':f'{time_stamp:%Y-%m-%d %H:%M:%S}',
-                            'mail_alert': 1}
-                    with open (datafile, 'w') as json_file:
-                        json.dump(data, json_file)
+def write_2_log(message):
+    print(f'DEBUG@write_2_log: {message}')
+    with open(log_file, 'a') as log:
+        log.write(message)
+
+
+def write_2_json(light, time, level):
+    with open(data_file, 'w') as json_file:
+        data = {"light_mode": light,
+                "last_change": time,
+                "warning_level": level
+                }
+        json.dump(data, json_file)
+
+
+if light_readed != data['light_mode']:
+    last_change = str(datetime.now())
+    warning_level = 0
+    light_mode = light_readed
+    with open(data_file, 'w') as json_file:
+        data = {"light_mode": light_readed,
+                "last_change": now,
+                "warning_level": 0
+                }
+        json.dump(data, json_file)
+    write_2_log(f"{now}_light mode passed to: {light_readed}\n")
+
+else:
+    if light_readed == 'light':
+        time_delta = datetime.now() - datetime.strptime(last_change, "%Y-%m-%d %H:%M:%S")
+        print(f'DEBUG: time delta = {time_delta}')
+        if warning_level < 1:
+            if time_delta > timedelta(minutes=5):
+                write_2_log(f"{now}_warning level grow to 1\n")
+                write_2_json("light", last_change, 1)
+        elif warning_level < 2:
+            if time_delta > timedelta(minutes=10):
+                write_2_log(f"{now}_warning level grow to 2\n")
+                write_2_json("light", last_change, 2)
+
