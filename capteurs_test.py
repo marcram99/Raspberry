@@ -11,7 +11,6 @@ if not logfile.exists():
     logfile.touch()
 
 
-
 class Light_captor():
     def __init__(self):
         self.test_lightcaptor = Config.files_path.joinpath("light.json")
@@ -23,3 +22,16 @@ class Light_captor():
         with open(self.test_lightcaptor) as json_file:
             return json.load(json_file)['light_mode']
 
+
+class Temp_captor():
+    def __init__(self):
+        self.test_tempcaptor = Config.files_path.joinpath("temp.json")
+        if not self.test_tempcaptor.exists():
+            with open(self.test_tempcaptor, 'w') as json_file:
+                json.dump({'temp': 20, 'hum': 80}, json_file)
+
+    def read_state(self):
+        with open(self.test_tempcaptor, 'w') as json_file:
+            temp = json.load(json_file)['temp']
+            hum = json.load(json_file)['hum']
+        return {'température': temp, 'humidité': hum}
