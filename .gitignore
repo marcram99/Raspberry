@@ -1,4 +1,6 @@
+# Python
 __pycache__/
+*.pyc
 *.py[cod]
 *$py.class
 
@@ -11,7 +13,10 @@ ENV/
 env.bak/
 venv.bak/
 
+# Mac garbage
+.DS_Store
+
 #local config file
-data.json
-#config.py
+config.py
 /logfiles/
+/files/

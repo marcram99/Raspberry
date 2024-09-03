@@ -17,3 +17,8 @@ data = f'{time_stamp}_T:{temp:.2f}_H:{hum:.1f}\n'
 
 with open(logfile, 'a') as log:
     log.write(data)
+
+with open(temp_file,'w') as new_temp:
+    json.dump({"temp": temp, 
+               "hum": hum},
+              new_temp)
