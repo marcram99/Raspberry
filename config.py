@@ -3,14 +3,9 @@ from pathlib import Path
 
 # configuration des différents chemins d'accès des logfiles
 
-
 class Config():
-    #mac path:
-    files_path = Path.home().joinpath('Marc-perso/code/python/Raspberry/files')
-    logfiles_path = Path.home().joinpath('Marc-perso/code/python/Raspberry/logfiles')
-    # linux path:
-    #files_path = Path.home().joinpath('Raspi/files')
-    #logfiles_path = Path.home().joinpath('Raspi/logfiles')
+    files_path = Path.home().joinpath('Raspberry/files')
+    logfiles_path = Path.home().joinpath('Raspberry/logfiles')
     if not files_path.exists():
         Path.mkdir(files_path)
     if not logfiles_path.exists():
@@ -21,10 +16,7 @@ class Config():
 
     data_file = files_path.joinpath('data.json')
     test_lightcaptor = files_path.joinpath('light.json')
+    temp_file = files_path.joinpath('temp.json')
 
     light_mode = 'dark'
-# configuration des paramètres du rapsberry et de ces capteurs, switchs etc...
-class Raspi():
-    name = "cave"
-    capteur = ["temp", "hum", "lux", "light" ] 
-    switch = ["garage", "voiture"]
+    name = "raspi_hug"

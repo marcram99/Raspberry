@@ -1,3 +1,4 @@
+import json
 from datetime  import datetime
 from config import Config
 from capteurs import Temp_captor
@@ -9,6 +10,7 @@ if not debug_logfile.exists():
 logfile = Config.temp_logfile
 if not logfile.exists():
     logfile.touch()
+temp_file = Config.temp_file
 
 t_capt = Temp_captor()
 temp = t_capt.read_temp()
@@ -22,5 +24,3 @@ with open(temp_file,'w') as new_temp:
     json.dump({"temp": temp, 
                "hum": hum},
               new_temp)
-# test comment
-
