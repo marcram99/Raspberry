@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime  import datetime
 from config import Config
 from capteurs import Temp_captor
 
@@ -22,3 +22,5 @@ with open(temp_file,'w') as new_temp:
     json.dump({"temp": temp, 
                "hum": hum},
               new_temp)
+# test comment
+
