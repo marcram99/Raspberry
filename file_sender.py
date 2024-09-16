@@ -4,7 +4,7 @@ from scp import SCPClient
 from config import Config
 
 
-def file_Sender(my_file, distant_path):
+def file_sender(my_file, distant_path):
     hostname = Config.ssh_hostname
     user = Config.ssh_user
     ssh_key = Config.ssh_key
