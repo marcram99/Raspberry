@@ -23,7 +23,7 @@ with open(logfile, 'a') as log:
 
 with open(temp_file,'w') as new_temp:
     json.dump({"name": Config.name,
-               "date&time": time_stamp,
+               "date_time": time_stamp,
                "temp": f'{temp:.2f}', 
                "hum": f'{hum:.2f}'},
               new_temp)
