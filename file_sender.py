@@ -21,4 +21,4 @@ if __name__ == '__main__':
 
     my_file = Config.temp_file
     distant_path = '/home/ubuntu/temp.json'
-    file_Sender(my_file, distant_path)
+    file_sender(my_file, distant_path)
